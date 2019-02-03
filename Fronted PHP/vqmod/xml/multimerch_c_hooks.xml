@@ -1,0 +1,193 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch + SO Revo theme hooks</id>
+	<version>1.0.7</version>
+	<author>https://openfoxx.com/</author>
+	<comment><![CDATA[MultiMerch 8.7.4.1 + SO Revo 1.0.5]]></comment>
+
+    <!-- product page hooks -->
+    <file name="catalog/view/theme/*/template/product/product.tpl">
+        <!-- tab headers -->
+		<operation error="log">
+			<search position="after" offset="2"><![CDATA[<li class="<?php echo (!$description && !$attribute_groups ? 'active' : 'item_nonactive'); ?>">]]></search>
+			<add><![CDATA[<!-- mm tab header start -->]]></add>
+		</operation>
+		
+		 <operation error="log">
+			<search position="after" offset="3"><![CDATA[<li class="<?php echo (!$description && !$attribute_groups ? 'active' : 'item_nonactive'); ?>">]]></search>
+			<add><![CDATA[
+			    <!-- mm tab header end -->
+			]]></add>
+		</operation>
+		<operation error="log">
+			<search position="after" offset="2"><![CDATA[<li class="<?php echo (!$description && !$attribute_groups ? 'active' : ''); ?>">]]></search>
+			<add><![CDATA[<!-- mm tab header start -->]]></add>
+		</operation>
+		<operation error="log">
+			<search position="after" offset="3"><![CDATA[<?php echo (!$description && !$attribute_groups ? 'active' : ''); ?>]]></search>
+			<add><![CDATA[<!-- mm tab header end -->]]></add>
+		</operation>
+	
+		<!-- product info blocks -->
+		<operation>
+			<search position="after" offset="1" ><![CDATA[// Header Blocks]]></search>
+			<add><![CDATA[
+				<div class="box-info-vendor-detail">
+					<div class="container ">
+						<div class="row">
+							<div class="col-xs-12">
+							<!-- mm attributes end -->
+							
+							<!-- MM rating stars -->
+							</div>
+						</div>
+					</div>
+				</div>
+			    
+			]]></add>
+		</operation> 
+		
+		<!-- Product Questions tab -->
+		<operation error="log">
+			<search position="after" offset="3"><![CDATA[<div id="tab-1"]]></search>
+			<add><![CDATA[
+				<!-- tab MM questions -->
+			]]></add>
+		</operation>
+		
+		<!-- Product Disqus comments tab -->
+		<operation error="log">
+			<search position="after" offset="3"><![CDATA[<div id="tab-1"]]></search>
+			<add><![CDATA[
+				<!-- tab MM disqus comments -->
+			]]></add>
+		</operation>
+		
+		<!-- Product Reviews tab -->
+		<operation error="log">
+			<search position="after" offset="3"><![CDATA[<div id="tab-1"]]></search>
+			<add><![CDATA[
+				<!-- tab MM reviews -->
+			]]></add>
+		</operation>
+
+		<!-- Product Shipping tab -->
+		<operation error="log">
+			<search position="after" offset="3"><![CDATA[<div id="tab-1"]]></search>
+			<add><![CDATA[
+				<!-- tab MM shipping -->
+			]]></add>
+		</operation>
+
+
+	</file>
+
+    <!-- login / menu hooks -->
+	<file name="catalog/view/theme/*/template/account/login.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<a href="<?php echo $register; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+			]]></search>
+			<add><![CDATA[
+			    <!-- mm register form end -->
+			]]></add>
+		</operation>
+	</file>
+
+    <!-- seller account menu in header * đang test -->
+	<file name="catalog/view/theme/*/template/common/header.tpl">
+		<operation error="log">
+			<search position="before" offset="1"><![CDATA[
+				<ul class="top-link list-inline">
+			]]></search>
+			<add><![CDATA[
+			    <!-- mm header menu start -->
+			]]></add>
+		</operation>
+
+        <operation error="log">
+			<search position="after"><![CDATA[
+				<li><a href="<?php echo $checkout; ?>" title="<?php echo $text_checkout; ?>"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a></li>
+			]]></search>
+			<add><![CDATA[
+			    <!-- mm header menu end -->
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- account area menu -->
+	<file name="catalog/view/theme/*/template/account/account.tpl">
+		<operation error="skip">
+			<search position="before"><![CDATA[
+			    <h2><?php echo $text_my_account; ?></h2>
+			]]></search>
+			<add><![CDATA[
+			    <!-- mm account menu start -->
+			]]></add>
+		</operation>
+
+		<operation error="skip">
+			<search position="before"><![CDATA[
+			    <h2><?php echo $text_my_orders; ?></h2>
+			]]></search>
+			<add><![CDATA[
+			    <!-- mm account menu orders start -->
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+			    <h2><?php echo $text_my_newsletter; ?></h2>
+			]]></search>
+			<add><![CDATA[
+			    <!-- mm account menu newsletter start -->
+			]]></add>
+		</operation>
+
+		<operation error="skip">
+			<search position="before"><![CDATA[
+			    <?php echo $content_bottom; ?>
+			]]></search>
+			<add><![CDATA[
+			    <!-- mm account menu end -->
+			]]></add>
+		</operation>
+	</file>
+	
+	<!--  seller info in minicart -->
+	<file name="catalog/view/theme/*/template/common/cart.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<a class="cart_product_name" href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+			]]></search>
+			<add><![CDATA[
+			<?php
+				MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+				$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+				if ($seller) {
+					echo "<span class='ms-by-seller'>" . MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+				}
+			?>
+			]]></add>
+		</operation>
+	</file>
+	<!--  seller info in Onepagecheckout -->
+	<file name="catalog/view/theme/*/template/extension/module/so_onepagecheckout/checkout/cart.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<a href="<?php echo $product['href']; ?>" class="product-name"><?php echo $product['name']; ?></a>
+			]]></search>
+			<add><![CDATA[
+			<?php
+				MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+				$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+				if ($seller) {
+					echo "<span class='ms-by-seller'>" . MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+				}
+			?>
+			]]></add>
+		</operation>
+	</file>
+</modification>
