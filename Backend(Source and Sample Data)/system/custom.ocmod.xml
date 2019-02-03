@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name><![CDATA[soconfig theme]]></name>
+    <version><![CDATA[1.0.0]]></version>
+    <author><![CDATA[openfoxx - openfoxx.com]]></author>
+	<!--Dev: Custom-->
+	
+	<file path="admin/controller/common/column_left.php">
+		
+	   <operation>
+			<search><![CDATA[$design = array();]]></search>
+			<add  position="before"><![CDATA[
+				$openfoxx = array();
+				if ($this->user->hasPermission('access', 'extension/module/soconfig')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Themes Config',
+						'href'     => $this->url->link('extension/module/soconfig', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/soconfig_mobile')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Mobile ',
+						'href'     => $this->url->link('extension/module/soconfig_mobile', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_page_builder')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Page Builder',
+						'href'     => $this->url->link('extension/module/so_page_builder', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_tools')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Tools',
+						'href'     => $this->url->link('extension/module/so_tools', 'token=' . $this->session->data['token'].'&module_id=375', true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_onepagecheckout')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Onepage Checkout',
+						'href'     => $this->url->link('extension/module/so_onepagecheckout', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_megamenu')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Megamenu',
+						'href'     => $this->url->link('extension/module/so_megamenu', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_newletter_custom_popup')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Newletter',
+						'href'     => $this->url->link('extension/module/so_newletter_custom_popup', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				
+				if ($this->user->hasPermission('access', 'extension/module/so_deals')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Deals',
+						'href'     => $this->url->link('extension/module/so_deals', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_extra_slider')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Extra Slider',
+						'href'     => $this->url->link('extension/module/so_extra_slider', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				
+				if ($this->user->hasPermission('access', 'extension/module/so_html_content')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Html Content',
+						'href'     => $this->url->link('extension/module/so_html_content', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+
+				
+				if ($this->user->hasPermission('access', 'extension/module/so_listing_tabs')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Listing Tabs',
+						'href'     => $this->url->link('extension/module/so_listing_tabs', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_basic_products')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Basic Products',
+						'href'     => $this->url->link('extension/module/so_basic_products', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_super_category')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Super Category',
+						'href'     => $this->url->link('extension/module/so_super_category', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_category_slider')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Category Slider',
+						'href'     => $this->url->link('extension/module/so_category_slider', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_latest_blog')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Latest Blog',
+						'href'     => $this->url->link('extension/module/so_latest_blog', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_home_slider')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Home Slider',
+						'href'     => $this->url->link('extension/module/so_home_slider', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_filter_shop_by')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Filter Shop By',
+						'href'     => $this->url->link('extension/module/so_filter_shop_by', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_popular_tags')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Popular Tags',
+						'href'     => $this->url->link('extension/module/so_popular_tags', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_searchpro')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Search Pro',
+						'href'     => $this->url->link('extension/module/so_searchpro', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_instagram_gallery')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Instagram Gallery',
+						'href'     => $this->url->link('extension/module/so_instagram_gallery', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+				if ($this->user->hasPermission('access', 'extension/module/so_countdown')) {		
+					$openfoxx[] = array(
+						'name'	   => 'openfoxx Countdown Popup',
+						'href'     => $this->url->link('extension/module/so_countdown', 'token=' . $this->session->data['token'], true),
+						'children' => array()
+					);
+				}
+
+				if ($extension) {					
+					$data['menus'][] = array(
+						'id'       => 'menu-openfoxx',
+						'icon'	   => 'fa-wrench icon-so', 
+						'name'	   => 'openfoxx',
+						'href'     => '',
+						'children' => $openfoxx
+					);		
+				}
+				
+			]]></add>
+		</operation>
+		
+	</file>
+
+
+
+	<!--  End admin/controller-->
+	
+</modification>

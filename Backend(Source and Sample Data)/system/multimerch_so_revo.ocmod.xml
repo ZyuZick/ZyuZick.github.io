@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name><![CDATA[soconfig theme]]></name>
+    <version><![CDATA[1.0.0]]></version>
+    <author><![CDATA[openfoxx - openfoxx.com]]></author>
+	
+	<!-- Custom multimerch_multiseller -->
+	<file path="catalog/view/theme/*/template/multiseller/catalog-seller.tpl">
+		<operation>
+			<search><![CDATA[<div class="row mm_seller">]]></search>
+			<add position="replace"><![CDATA[<div class="mm_seller col-lg-4 col-sm-6 col-xs-12">]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[<div class="mm_sellerdescription">]]></search>
+			<add position="before" offset="1" ><![CDATA[
+				<!-- banner -->
+				<div class="top-banner"></div>
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/multiseller/catalog-seller-profile.tpl">
+		<operation>
+			<search><![CDATA[<div class="caption">]]></search>
+			<add position="after" offset="1"><![CDATA[
+				<?php if ($product['price']) { ?>
+				<p class="price">
+					<?php if (!$product['special']) { ?>
+					<?php echo $product['price']; ?>
+					<?php } else { ?>
+					<span class="price-new"><?php echo $product['special']; ?></span> <span class="price-old"><?php echo $product['price']; ?></span>
+					<?php } ?>
+					<?php if ($product['tax']) { ?>
+					<span class="price-tax hidden"><?php echo $text_tax; ?> <?php echo $product['tax']; ?></span>
+					<?php } ?>
+				</p>
+				<?php } ?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<!--Dev: Custom-->
+	<file path="catalog/view/theme/*/template/common/header.tpl">
+		<operation>
+			 <search><![CDATA[$this->soconfig->addCss('catalog/view/javascript/font-awesome/css/font-awesome.min.css');]]></search>
+			<add position="before" ><![CDATA[
+				$this->soconfig->addCss('catalog/view/theme/default/stylesheet/marketplace.css');
+			]]></add>
+		</operation>
+		
+	</file>
+	
+	
+	<file path="catalog/view/theme/*/template/product/{search,special,manufacturer}*.tpl">
+		<operation >			
+			<search><![CDATA[
+			if (file_exists(DIR_TEMPLATE . $theme . '/template/soconfig/listing.php')) include(DIR_TEMPLATE.$theme.'/template/soconfig/listing.php');
+			]]></search>
+			<add position="replace"><![CDATA[if (file_exists(DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/listing.php')) {]]></add>
+		</operation>
+		<operation >			
+			<search><![CDATA[
+			else echo 'Not found';
+			]]></search>
+			<add position="replace"><![CDATA[
+				include (DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/listing.php');
+			}else {
+				include(DIR_TEMPLATE.$theme.'/template/soconfig/listing.php');
+			}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/*/template/product/{category}*.tpl">
+		<operation >			
+			<search><![CDATA[if (file_exists(DIR_TEMPLATE . $theme . '/template/soconfig/category_deals.tpl'))]]></search>
+			<add position="replace"><![CDATA[if (file_exists(DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/category_deals.tpl'))]]></add>
+		</operation>
+		<operation >			
+			<search><![CDATA[include(DIR_TEMPLATE.$theme.'/template/soconfig/category_deals.tpl');]]></search>
+			<add position="replace"><![CDATA[include (DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/category_deals.tpl');]]></add>
+		</operation>
+		<operation >			
+			<search><![CDATA[}else echo 'Not found';]]></search>
+			<add position="replace"><![CDATA[}else {include(DIR_TEMPLATE.$theme.'/template/soconfig/category_deals.tpl');}]]></add>
+		</operation>
+		<operation >			
+			<search><![CDATA[
+			if (file_exists(DIR_TEMPLATE . $theme . '/template/soconfig/category_grid.tpl')) include(DIR_TEMPLATE.$theme.'/template/soconfig/category_grid.tpl');
+			]]></search>
+			<add position="replace"><![CDATA[if (file_exists(DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/category_grid.tpl')) {]]></add>
+		</operation>
+		<operation >			
+			<search><![CDATA[
+			else include(DIR_TEMPLATE.'default/template/soconfig/category_grid.tpl');
+			]]></search>
+			<add position="replace"><![CDATA[
+				include (DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/category_grid.tpl');
+			}else {
+				include(DIR_TEMPLATE.$theme.'/template/soconfig/category_grid.tpl');
+			}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/*/template/soconfig/{category_grid}*.tpl">
+		<operation >			
+			<search><![CDATA[
+			if (file_exists(DIR_TEMPLATE . $theme . '/template/soconfig/listing.php')) include(DIR_TEMPLATE.$theme.'/template/soconfig/listing.php');
+			]]></search>
+			<add position="replace"><![CDATA[if (file_exists(DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/listing.php')) {]]></add>
+		</operation>
+		<operation >			
+			<search><![CDATA[
+			else echo 'Not found';
+			]]></search>
+			<add position="replace"><![CDATA[
+				include (DIR_SYSTEM . '/storage/modification/catalog/view/theme/'.$theme.'/template/soconfig/listing.php');
+			}else {
+				include(DIR_TEMPLATE.$theme.'/template/soconfig/listing.php');
+			}
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/view/theme/*/template/soconfig/listing.php">
+		<operation >
+			<search><![CDATA[<div class="button-group">]]></search>
+			<add position="before"><![CDATA[
+			<?php
+				MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+				$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+				if ($seller) {
+					echo "<div class='ms-avatar'>" ;
+					echo "<img src='image/".$seller['ms.avatar']."' />";
+					echo  MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+					echo "</div>";
+				}
+			?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file path="catalog/view/theme/*/template/soconfig/category_deals.tpl">
+		<operation >
+			<search><![CDATA[<div class="short_description clearfix">]]></search>
+			<add position="before"><![CDATA[
+			<?php
+				MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+				$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+				if ($seller) {
+					echo "<div class='ms-avatar'>" ;
+					echo "<img src='image/".$seller['ms.avatar']."' />";
+					echo  MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+					echo "</div>";
+				}
+			?>
+			]]></add>
+		</operation>
+	</file>
+
+	
+</modification>
